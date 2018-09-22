@@ -1,0 +1,74 @@
+
+{# TODO - ADICIONAR Logotipo Ulbra – logotipo Computação #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Relatório de Trabalhos do Semestre - {{ semester }}</title>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/admin-lte/css/bootstrap.min.css') }}">
+    <style>
+        /*@page {
+            size: auto;   !* auto is the initial value *!
+            margin: 10px;  !* this affects the margin in the printer settings *!
+        }*/
+        .corpo {
+            margin-top: 50px;
+        }
+
+        .list {
+            padding-left: 20px;
+            margin: 0;
+        }
+
+        table tr:nth-child(1) {
+            background-color: whitesmoke;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .dont-break {
+            page-break-inside: avoid;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container corpo">
+    <h2><b>Relatório de Trabalhos do Semestre - {{ semester }}</b></h2>
+
+    {% if boards %}
+        {% for board in boards %}
+            <div class="dont-break">
+                <table class="table table-bordered">
+                    <tr>
+                        <th class="col-md-2 col-sm-2 col-xs-2 col-lg-2">Aluno</th>
+                        <td>{{ board.project.student }}</td>
+                    </tr>
+                    <tr>
+                        <th class="">Orientador</th>
+                        <td>{{ board.project.advisor }}</td>
+                    <tr>
+                        <th class="">Titulo do Projeto</th>
+                        <td>{{ board.project.name }}</td>
+                    </tr>
+                    <tr>
+                        <th class="">Resumo do Projeto</th>
+                        <td>{{ board.project.description }}</td>
+                    </tr>
+                </table>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Não existe nenhuma banca cadastrada para esse semestre.</h3>
+            </div>
+        </div>
+    {% endif %}
+</div>
+</body>
+</html>
+

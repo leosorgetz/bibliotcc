@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        h1 {
+            font-weight: bold;
+        }
+
+        p {
+            color: white;
+            font-size: 26px;
+            text-align: center;
+        }
+
+        .btn-home {
+            color: white;
+            border: solid white 1px;
+            padding: 10px;
+        }
+
+        .btn-home:hover {
+            background-color: #6b6af8;
+            color: white;
+            text-decoration: none;
+        }
+
+        .middle-center {
+            margin-top: 30px;
+            text-align: center;
+        }
+    </style>
+{% endblock stylesheets %}
+
+{% block navbar %}
+{% endblock navbar %}
+
+{% block body %}
+    <h1>Erro {{ status_code }}</h1>
+    <p>Algo de errado ocorreu e não sabemos o que é..</p>
+    <div class="middle-center">
+        <a href="{{ path('homepage') }}" class="btn-home">Pagina Inicial</a>
+    </div>
+{% endblock body %}

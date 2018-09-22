@@ -1,0 +1,71 @@
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% if is_granted('ROLE_PROFESSOR') %}
+        {% include 'partials/admin/header.html.twig' with {
+            'title': ' Minhas Bancas Abertas',
+            'subtitle': 'Professor'
+        } %}
+    {% else %}
+        {% include 'partials/admin/header.html.twig' with {
+            'title': 'Minha Banca',
+            'subtitle': 'Aluno'
+        } %}
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            {% if boards %}
+                <table class="table table-bordered {% if is_granted("ROLE_PROFESSOR") %} datatable-dashboard {% endif %}">
+                    <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Orientador</th>
+                        <th>Horario</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in boards %}
+                        <tr>
+                            <td>{{ board.project.student }}</td>
+                            <td>{{ board.project.advisor }}</td>
+                            <td>{{ board.scheduledTime|date('d/m/Y H:i') }}</td>
+                            <td>
+                                <ul class="list-inline">
+                                    {#<li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.id }) }}">Banca</a>
+                                    </li>
+                                    #}{#{% if is_granted('ROLE_ADMIN') %}#}{#
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('project_show', { 'id': board.project.id }) }}">Projeto</a>
+                                    </li>
+                                    #}{#{% endif %}#}
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.id }) }}"><i
+                                                    class="glyphicon glyphicon-eye-open"></i></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            <strong>Não existe nenhuma banca cadastrada como Professor.</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}

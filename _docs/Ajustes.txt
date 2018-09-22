@@ -1,0 +1,18 @@
+--------------------------------------------------------------------------------------------------
+
+- Iniciar Banca apenas professor orientador após ou no dia da data da banca.
+- Input de notas, limitar caracteres.
+- Buscar alunos nas listagem de bancas que:
+    - não tenham banca cancelada
+        ou
+    - tenham banca com nota abaixo de 6
+        ou
+    - não tenham banca cadastrada
+- Validar data de entrega ser menor SEMPRE que dia da banca
+
+---------------------------------------------------------------------------------------------------
+IMPLEMENTAR DPS
+- Relatorio de presença na banca - Sugestão do Ramon.
+- Calendario no lugar dos dropdowns em forms Date e DateTime
+- Integração Google Calendar
+

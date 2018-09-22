@@ -1,0 +1,311 @@
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': board,
+        'subtitle': ''
+    } %}
+{% endblock %}
+
+{% block body %}
+    {# Banca #}
+    <div class="col-md-6">
+        <div class="box">
+            {% include 'partials/admin/box-header.html.twig' with {
+                'title': 'Banca',
+            } %}
+            <div class="box-body">
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <a class="btn btn-secondary"
+                           href="{{ path('board_by_semester', {id:  board.semester.id}) }}">Bancas
+                            de {{ board.semester }}</a>
+                    </li>
+                    {% if is_granted('ROLE_PROFESSOR') %}
+                        <li class="list-inline-item">
+                            <div class="dropdown">
+
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                        data-toggle="dropdown">
+                                    Mais Opções&nbsp;
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <li>
+                                            <a href="{{ path('board_edit', { 'id': board.id }) }}">Editar</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {#{% if is_granted('ROLE_PROFESSOR') and board.isPresented %}#}
+                                    {% if is_granted('ROLE_PROFESSOR') %}
+                                        <li>
+                                            <a class="input-in-li"
+                                               href="{{ path('board_report', { 'id': board.id }) }}" target="_blank">Ata
+                                                de
+                                                Banca</a>
+                                        </li>
+                                    {% endif %}
+
+                                    {% if app.user and board.project.advisor.id == app.user.id %}
+                                        {% if not board.isPresented %}
+                                            <li class="">
+                                                <a class="input-in-li"
+                                                   href="{{ path('board_init', { 'id': board.id }) }}">Iniciar Banca</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if app.user and board.project.advisor.id == app.user.id %}
+                                        {% if not board.isFinalized and board.project.lastPost %}
+                                            <li class="">
+                                                {#{{ form_start(finalize_form) }}#}
+                                                {{ form_start(finalize_form, {'attr': {'id': 'form_finalize'}}) }}
+                                                <input class="input-in-li" type="submit" value="Finalizar Banca">
+                                                {{ form_end(finalize_form) }}
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_ADMIN') and not board.isCanceled %}
+                                        {% if not board.isPresented %}
+                                            <li>
+                                                {{ form_start(cancel_form, {'attr': {'id': 'form_cancel'}}) }}
+                                                <input class="input-in-li input-danger-in-li" type="submit"
+                                                       value="Cancelar Banca">
+                                                {{ form_end(cancel_form) }}
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+
+                                    {% if is_granted('ROLE_ADMIN') and board.isCanceled %}
+                                        <li>
+                                            {{ form_start(rest_form, {'attr': {'id': 'form_rest'}}) }}
+                                            <input class="input-in-li input-danger-in-li" type="submit"
+                                                   value="Restabelecer Banca">
+                                            {{ form_end(rest_form) }}
+                                        </li>
+                                    {% endif %}
+                                </ul>
+
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <table class="table table-bordered">
+                    <tbody>
+                    {#----------------------------------#}
+                    <tr>
+                        <th class="col-sm-3">Data</th>
+                        <td>{{ board.scheduledTime|date('d/m/Y H:i') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Data de Primeira Postagem</th>
+                        <td>{{ board.project.firstPostDate|date('d/m/Y') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Aluno</th>
+                        <td>{{ board.project.student }}</td>
+                    </tr>
+                    <tr>
+                        <th>Orientador</th>
+                        <td>{{ board.project.advisor }}</td>
+                    </tr>
+                    <tr>
+                        <th>Avaliador 1</th>
+                        <td>{{ board.evaluatorOne }}</td>
+                    </tr>
+                    <tr>
+                        <th>Avaliador 2</th>
+                        <td>{{ board.evaluatorTwo }}</td>
+                    </tr>
+
+                    {% if board.isPresented %}
+                        {% if is_granted('ROLE_PROFESSOR') %}
+                            <tr>
+                                <th>Nota do Orientador</th>
+                                <td>{{ board.advisorGrade }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nota do Avaliador 1</th>
+                                <td>{{ board.evaluatorOneGrade }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nota do Avaliador 2</th>
+                                <td>{{ board.evaluatorTwoGrade }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+
+                    {% if board.isFinalized or is_granted('ROLE_PROFESSOR') %}
+                        <tr>
+                            <th>Nota Final</th>
+                            <td>{{ board.finalGrade }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if not board.isFinalized or is_granted('ROLE_PROFESSOR') %}
+                        {% if is_granted('ROLE_PROFESSOR') or app.user and app.user.id == board.project.student.id %}
+                            <tr>
+                                <th>Observações</th>
+                                <td>{{ board.observations }}</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+
+                    <tr>
+                        <th>Semestre</th>
+                        <td>{{ board.semester }}</td>
+                    </tr>
+
+                    {% if not board.isCanceled %}
+                        <tr>
+                            <th>Apresentada</th>
+                            <td>{{ board.isPresented ? 'Sim'  : 'Não' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Finalizada</th>
+                            <td>{{ board.isFinalized ? 'Sim'  : 'Não' }}</td>
+                        </tr>
+                    {% endif %}
+
+                    {% if board.isCanceled %}
+                        <tr>
+                            <th>Cancelada</th>
+                            <td>{{ board.isCanceled ? 'Sim'  : 'Não' }}</td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {# Projeto #}
+    <div class="col-md-6">
+        <div class="box">
+            {% include 'partials/admin/box-header.html.twig' with {
+                'title': 'Projeto',
+            } %}
+            <div class="box-body">
+
+                <ul class="list-inline">
+
+                    {% if board.isFinalized and board.finalGrade > 9 %}
+                        <li class="list-inline-item">
+                            <a class="btn btn-secondary" href="{{ path('project_index') }}">Todos os Projetos</a>
+                        </li>
+                    {% endif %}
+
+                    {#Se é estudante e o responsavel pelo projeto.#}
+                    {% if is_granted("ROLE_STUDENT") and app.user.id == board.project.student.id %}
+                        {# Se não passou da data #}
+                        {% if "now"|date("Y-m-d") <= board.project.firstPostDate|date("Y-m-d")
+                            and not board.isPresented %}
+                            <li class="list-inline-item">
+                                <a class="btn btn-primary"
+                                   href="{{ path('project_first_post', { 'id': board.project.id }) }}">Primeira
+                                    Postagem</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+
+                    {# Se o estudante ja fez a primeira postagem,
+                       se teve a banca apresentada,
+                       se não fez a ultima postagem.
+                       e se está dentro da data de postagem #}
+                    {% if is_granted("ROLE_STUDENT") and app.user.id == board.project.student.id %}
+                        {#{% if board.project.firstPost
+                            and "now"|date("Y-m-d H:i") < board.project.lastPostDate|date("Y-m-d H:i")
+                            and "now"|date("Y-m-d H:i") > board.project.board.scheduledTime|date("Y-m-d H:i") %}#}
+                        {% if not board.isFinalized %}
+                            {% if board.project.firstPost
+                                and board.isPresented
+                                and "now"|date("Y-m-d") <= board.project.lastPostDate|date("Y-m-d") %}
+                                <li class="list-inline-item">
+                                    <a class="btn btn-primary"
+                                       href="{{ path('project_last_post', { 'id': board.project.id }) }}">Ultima
+                                        Postagem</a>
+                                </li>
+
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+
+                    {% if is_granted("ROLE_PROFESSOR") or app.user and app.user.id == board.project.advisor.id %}
+                        <li class="list-inline-item">
+                            <div class="dropdown">
+
+                                <button class="btn btn-primary dropdown-toggle" type="button"
+                                        data-toggle="dropdown">
+                                    Mais Opções&nbsp;
+                                    <span class="caret"></span>
+                                </button>
+
+                                <ul class="dropdown-menu">
+                                    {% if app.user.id == board.project.advisor.id or is_granted('ROLE_ADMIN') %}
+                                        <li>
+                                            <a class="input-in-li"
+                                               href="{{ path('project_edit', { 'id': board.project.id }) }}">Editar</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th class="col-sm-2">Titulo</th>
+                        <td>{{ board.project.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Descrição</th>
+                        <td>{{ board.project.description }}</td>
+                    </tr>
+                    {% if board.project.article %}
+                        <tr>
+                            <th>Artigo</th>
+                            {% if board.isFinalized and board.finalGrade > 9
+                                or is_granted('ROLE_PROFESSOR')
+                                or app.user and app.user.id == board.project.student.id %}
+                                <td>
+                                    <form action="{{ path('article_download', { 'id': board.project.id }) }}"
+                                          method="post">
+                                        <input class="btn btn-success" type="submit" value="Download Artigo">
+                                    </form>
+                                </td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+
+                    {% if board.project.code %}
+                        <tr>
+                            <th>Codigo Fonte</th>
+                            {% if board.isFinalized and board.finalGrade > 9
+                                or is_granted('ROLE_PROFESSOR')
+                                or app.user and app.user.id == board.project.student.id %}
+                                <td>
+                                    <form action="{{ path('code_download', { 'id': board.project.id }) }}"
+                                          method="post">
+                                        <input class="btn btn-success" type="submit" value="Download Codigo">
+                                    </form>
+                                </td>
+                            {% else %}
+                                <td>-</td>
+                            {% endif %}
+                        </tr>
+
+                    {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Relatorio da Banca</title>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/admin-lte/css/bootstrap.min.css') }}">
+
+    {# Styles #}
+    <style>
+        @page {
+            size: auto;   /* auto is the initial value */
+            margin: 20px;  /* this affects the margin in the printer settings */
+        }
+
+        .corpo {
+            margin-top: 20px;
+        }
+
+        .table-label {
+            padding: 0 0 0 2px;
+        }
+
+        .logo-ulbra,
+        .logo-computacao {
+            width: 150px;
+        }
+
+        #aprovado + label,
+        #reprovado + label,
+        .avaliacao,
+        .grau-obtido {
+            font-size: 18px;
+            text-align: center;
+            font-weight: normal;
+        }
+
+        .title {
+            font-size: 30px;
+            text-align: center;
+            background-color: #d6d0d5;
+            padding-top: 10px;
+            padding-bottom: 5px;
+            text-transform: capitalize;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+    </style>
+    {# Styles #}
+
+</head>
+<body>
+<div class="container corpo">
+    <div class="row">
+        <div class="col-md-12">
+            <a id="print" class="btn btn-success btn-block hidden-xs">Imprimir</a>
+        </div>
+    </div>
+    <br>
+    <div class="row cabecalho">
+        <div class="col-md-6">
+            <img class="logo-ulbra pull-left" src="{{ asset('assets/img/logo-ulbra.png') }}" alt="Cabecalho">
+        </div>
+        <div class="col-md-6">
+            <img class="logo-computacao pull-right" src="{{ asset('assets/img/logo-computacao.png') }}" alt="Cabecalho">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="title">Avaliação de Trabalho de Conclusão de Curso</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <div class="col-xs-9 table-label">Aluno:</div>
+                    <td>{{ board.project.student }}</td>
+                    <div class="col-xs-3 table-label">Data:</div>
+                    <td class="col-xs-3">{{ board.scheduledTime|date('d/m/Y') }}</td>
+                </tr>
+            </table>
+
+            <table class="table table-bordered">
+                <tr>
+                    <div class="col-xs-12 table-label">Título do Trabalho:</div>
+                    <td>{{ board.project.name }}</td>
+                </tr>
+            </table>
+
+            <table class="table table-bordered">
+                <tr>
+                    <td height="450">{{ board.observations }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-3">
+            <span class="avaliacao">Avaliação:</span>
+        </div>
+        <div class="col-xs-3">
+            <input type="checkbox" id="aprovado" {% if board.finalGrade > 6 %} checked {% endif %}>
+            <label for="aprovado">Aprovado</label>
+        </div>
+        <div class="col-xs-3">
+            <input type="checkbox" id="reprovado" {% if board.finalGrade < 6 %} checked {% endif %}>
+            <label for="reprovado">Reprovado</label>
+        </div>
+        <div class="col-xs-3">
+            <span class="grau-obtido">Grau Obtido: <b>
+                    {% if board.isFinalized %}
+                        {{ board.finalGrade }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </b></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <tr>
+                    <div class="col-xs-7 table-label">Nome do Professor Avaliador:</div>
+                    <td class="col-xs-7">{{ board.project.advisor }}</td>
+                    <div class="col-xs-5 table-label">Assinatura:</div>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{ board.evaluatorOne }}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>{{ board.evaluatorTwo }}</td>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+{# Scripts #}
+<script src="{{ asset('assets/vendor/admin-lte/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/admin-lte/js/bootstrap.min.js') }}"></script>
+{# Scripts #}
+
+<script>
+    $(document).ready(function () {
+        $("#aprovado").click(function (e) {
+            e.preventDefault();
+        });
+
+        $("#reprovado").click(function (e) {
+            e.preventDefault();
+        });
+
+        $("#print").click(function (e) {
+            e.preventDefault();
+            window.print();
+        });
+    });
+</script>
+</body>
+</html>
+

@@ -1,0 +1,113 @@
+{#{% extends 'base.html.twig' %}#}
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': ['Bancas do Semestre - ', semester]|join(''),
+        'subtitle': ''
+    } %}
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-7">
+                    <ul class="list-inline">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="list-inline-item">
+                                <a class="btn btn-success"
+                                   href="{{ path('board_new_by_semester', {id: semester.id  }) }}">
+                                    Adicionar Banca</a>
+                            </li>
+                        {% endif %}
+                        <li class="list-inline-item">
+                            <a href="{{ path('semester_index') }}" class="btn btn-secondary">Lista de Semestres</a>
+                        </li>
+
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li class="list-inline-item">
+                                <div class="dropdown">
+
+                                    <button class="btn btn-primary dropdown-toggle" type="button"
+                                            data-toggle="dropdown">
+                                        Mais Opções&nbsp;
+                                        <span class="caret"></span>
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a href="{{ path('calendar_boards_of_semester', { 'id' : semester.id}) }}"
+                                               target="_blank">
+                                                Calendario de Bancas
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="{{ path('report_boards_of_semester', { 'id' : semester.id}) }}"
+                                               target="_blank">
+                                                Relatorio de Bancas
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            {% if boards %}
+                <table class="table table-bordered datatable-boards">
+                    <thead>
+                    <tr>
+                        <th>Aluno</th>
+                        <th>Orientador</th>
+                        <th>Data e Hora</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in boards %}
+                        <tr>
+                            <td>{{ board.project.student }}</td>
+                            <td>{{ board.project.advisor }}</td>
+                            <td>{{ board.scheduledTime|date('d/m/Y H:i') }}</td>
+                            <td>
+                                <ul class="list-inline">
+                                    {#<li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('project_show', { 'id': board.project.id }) }}">Projeto</a>
+                                    </li>
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.id }) }}">Banca</a>
+                                    </li>#}
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.project.board.id }) }}"><i
+                                                    class="glyphicon glyphicon-eye-open"></i></a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            {% else %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            Não existe nenhuma banca cadastrada para esse semestre..
+                        </div>
+                    </div>
+                </div>
+
+
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

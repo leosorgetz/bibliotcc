@@ -1,0 +1,18 @@
+# This file is a "template" of what your parameters.yml file should look like
+# Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
+# https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
+parameters:
+    database_host: localhost
+    database_port: 3336
+    database_name: NOMEDOBANCO
+    database_user: SEUUSUARIO
+    database_password: SUASENHA
+    mailer_transport: smtp
+    mailer_host: smtp.gmail.com
+    mailer_user: SEUEMAIL@gmail.com
+    mailer_password: SUASENHA
+    mailer_port: 587
+    mailer_encryption: tls
+
+    # A secret key that's used to generate certain security-related tokens
+    secret: akdhoasnbddlçkasbdjaklsgbdpoiasuyd0891h2oi31ug3piubd08gp1i

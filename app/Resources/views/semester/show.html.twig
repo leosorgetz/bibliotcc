@@ -1,0 +1,48 @@
+{#{% extends 'base.html.twig' %}#}
+{% extends 'admin.html.twig' %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            <h1>Semestre - {{ semester }}</h1>
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <a class="btn btn-secondary" href="{{ path('semester_index') }}">Voltar</a>
+                </li>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <li class="list-inline-item">
+                        <a class="btn btn-warning"
+                           href="{{ path('semester_edit', { 'id': semester.id }) }}">Editar</a>
+                    </li>
+                {% endif %}
+
+                {# Caso não exista bancas no semestre, pode apagar. #}
+                {% if boards == false %}
+                    <li class="list-inline-item">
+                        {{ form_start(delete_form) }}
+                        <input class="btn btn-danger" type="submit" value="Deletar">
+                        {{ form_end(delete_form) }}
+                    </li>
+                {% endif %}
+            </ul>
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Inicio</th>
+                    <td>{% if semester.start %}{{ semester.start|date('d/m/Y') }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <th>Fim</th>
+                    <td>{% if semester.end %}{{ semester.end|date('d/m/Y') }}{% endif %}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% if is_granted('ROLE_ADMIN') %}
+                {% if boards != false %}
+                    <small>Obs: não é possivel apagar semestres que tenham bancas cadastradas.</small>
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

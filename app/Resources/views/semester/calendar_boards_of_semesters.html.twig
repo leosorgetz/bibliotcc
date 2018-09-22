@@ -1,0 +1,164 @@
+
+{# TODO - ADICIONAR Logotipo Ulbra – logotipo Computação #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bancas-{{ semester }}</title>
+    <link rel="stylesheet" href="{{ asset('assets/vendor/admin-lte/css/bootstrap.min.css') }}">
+    <style>
+        .logo-ulbra,
+        .logo-computacao {
+            width: 150px;
+        }
+
+        .corpo {
+            padding-top: 50px;
+        }
+
+        .list {
+            margin: 0;
+        }
+
+        table tr td b {
+            font-size: 20px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table tr:nth-child(1) {
+            background-color: whitesmoke;
+        }
+
+        .dont-break {
+            page-break-inside: avoid;
+        }
+
+        .linha {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+
+        .custom-container {
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        #print {
+            margin-top: 10px;
+        }
+
+
+    </style>
+    <style type="text/css" media="print">
+        @page {
+            size: landscape;
+
+        }
+
+        @page {
+            padding-top: 100px;
+        }
+
+        #print {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="custom-container">
+    <div class="row">
+        <div class="col-md-12">
+            <a id="print" class="btn btn-success btn-block hidden-xs">Imprimir</a>
+        </div>
+    </div>
+</div>
+<br>
+<div class="cabecalho">
+    <img class="logo-ulbra pull-left" src="{{ asset('assets/img/logo-ulbra.png') }}" alt="Cabecalho">
+    <img class="logo-computacao pull-right" src="{{ asset('assets/img/logo-computacao.png') }}" alt="Cabecalho">
+</div>
+<div class="custom-container corpo">
+    <div class="landscapeDiv">
+        <h2><b>Calendario de Bancas do Semestre - {{ semester }}</b></h2>
+        <div class="linha">
+            {% if boards %}
+                {% for board in boards %}
+                    <div class="col-md-6 col-xs-6">
+                        <div class="dont-break">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th class="col-md-4 col-sm-4 col-xs-4 col-lg-4">Data</th>
+                                    <td>
+                                        <b>
+                                            {{ board.scheduledTime|date('d/m/Y H:i') }}
+                                            -
+                                            {{ board.scheduledTime|date('l')|replace({
+                                                'Monday':'Segunda',
+                                                'Tuesday':'Terça',
+                                                'Wednesday':'Quarta',
+                                                'Thursday':'Quinta',
+                                                'Friday':'Sexta',
+                                                'Saturday':'Sabado',
+                                                'Sunday':'Domingo'}) }}</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Aluno</th>
+                                    <td><b>{{ board.project.student }}</b></td>
+                                </tr>
+                                <tr>
+                                    <th>Orientador</th>
+                                    <td>{{ board.project.advisor }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Banca</th>
+                                    <td>
+                                        <ul class="list">
+                                            <li>{{ board.evaluatorOne }}</li>
+                                            <li>{{ board.evaluatorTwo }}</li>
+                                        </ul>
+
+                                    </td>
+                                </tr>
+                                {#<tr>
+                                    <th>Titulo do Trabalho</th>
+                                    <td>{{ board.project.name }}</td>
+                                </tr>#}
+                            </table>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Não existe nenhuma banca cadastrada para esse semestre.</h3>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{# Scripts #}
+<script src="{{ asset('assets/vendor/admin-lte/js/jquery.min.js') }}"></script>
+<script src="{{ asset('assets/vendor/admin-lte/js/bootstrap.min.js') }}"></script>
+{# Scripts #}
+
+<script>
+    $("#print").click(function (e) {
+        e.preventDefault();
+        window.print();
+    });
+</script>
+</body>
+</html>
+

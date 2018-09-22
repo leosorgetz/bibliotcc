@@ -1,0 +1,31 @@
+{% extends 'admin.html.twig' %}
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': 'Iniciar Banca',
+        'subtitle': ''
+    } %}
+{% endblock %}
+{% form_theme init_form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            {{ form_start(init_form) }}
+            {{ form_widget(init_form) }}
+            <ul class="list-inline">
+
+                <li class="list-inline-item">
+                    <input class="btn btn-success" type="submit" value="Apresentar"/>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{{ path('board_by_semester', {id: board.semester.id}) }}"
+                       class="btn btn-secondary">Voltar</a>
+                </li>
+
+            </ul>
+            {{ form_end(init_form) }}
+            <br>
+
+        </div>
+    </div>
+{% endblock %}

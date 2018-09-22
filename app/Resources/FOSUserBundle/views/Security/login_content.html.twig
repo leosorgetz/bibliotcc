@@ -1,0 +1,50 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+
+<div class="row">
+    {% if error %}
+        <div class="col-lg-offset-3 col-lg-6">
+            <div class="alert alert-danger" role="alert">
+                {#<div class="alert alert-danger alert-dismissible fade show" role="alert">#}
+                {{ error.messageKey|trans(error.messageData, 'security') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endif %}
+    <div class="col-lg-offset-4 col-lg-4">
+        <div class="panel-login">
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+                {% if csrf_token %}
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
+                {% endif %}
+                <div class="form-group">
+                    <label class="login-label" for="username">{{ 'Email'|trans }} ou Usuário</label>
+                    <input class="login-input form-control" type="text" id="username" name="_username"
+                           value="{{ last_username }}"
+                           required="required"/>
+                </div>
+                <div class="form-group">
+                    <label class="login-label" for="password">{{ 'Senha'|trans }}</label>
+                    <input class="login-input form-control" type="password" id="password" name="_password"
+                           required="required"/>
+                </div>
+                <div class="form-group">
+                    <input type="checkbox" id="remember_me" name="_remember_me" value="on"/>
+                    <label class="login-label" for="remember_me">{{ 'Lembrar-me'|trans }}</label>
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-success sucess-button float-right" type="submit" id="_submit" name="_submit"
+                           value="{{ 'Entrar'|trans }}"/>
+                </div>
+                <div class="form-group">
+                    <small>
+                        <a href="{{ path('fos_user_resetting_request') }}" class="remember-password-option">Esqueceu sua
+                            senha?</a>
+                    </small>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

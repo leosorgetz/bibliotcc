@@ -1,0 +1,12 @@
+{#{% extends "@FOSUser/layout.html.twig" %}#}
+{% extends "@Resources/views/base.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block body %}
+    <div class="col-sm-offset-3 col-sm-6">
+        <p class="confirm-reset">
+            {{ 'resetting.check_email'|trans({'%tokenLifetime%': tokenLifetime})|nl2br }}
+        </p>
+    </div>
+{% endblock %}

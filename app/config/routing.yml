@@ -1,0 +1,45 @@
+app_semester:
+    resource: "@AppBundle/Controller/SemesterController.php"
+    type:     annotation
+
+app_board:
+    resource: "@AppBundle/Controller/BoardController.php"
+    type:     annotation
+
+app_project:
+    resource: "@AppBundle/Controller/ProjectController.php"
+    type:     annotation
+
+app_board:
+    resource: "@AppBundle/Controller/BoardController.php"
+    type:     annotation
+
+app_semester:
+    resource: "@AppBundle/Controller/SemesterController.php"
+    type:     annotation
+
+app_project:
+    resource: "@AppBundle/Controller/ProjectController.php"
+    type:     annotation
+
+user:
+    resource: "@UserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+user_registration:
+    resource: "@UserBundle/Controller/RegistrationController.php"
+    type:     annotation
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
+easy_admin_bundle:
+    resource: "@EasyAdminBundle/Controller/AdminController.php"
+    type:     annotation
+    prefix:   /admin

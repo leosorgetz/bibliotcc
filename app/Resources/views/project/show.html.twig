@@ -1,0 +1,45 @@
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': 'Titulo',
+        'subtitle': ''
+    } %}
+{% endblock %}
+
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            <h1>Projeto - {{ project }}</h1>
+
+
+
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>Titulo</th>
+                    <td>{{ project.name }}</td>
+                </tr>
+                <tr>
+                    <th>Descrição</th>
+                    <td>{{ project.description }}</td>
+                </tr>
+
+                {% if project.lastPost and project.localPath %}
+                    <tr>
+                        <th>Arquivo</th>
+                        <td>
+                            <form action="{{ path('project_download', { 'id': project.id }) }}" method="post">
+                                <input class="" type="submit" value="Download">
+                            </form>
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+
+
+        </div>
+    </div>
+{% endblock %}

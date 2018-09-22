@@ -1,0 +1,32 @@
+{#{% extends 'base.html.twig' %}#}
+{% extends 'admin.html.twig' %}
+
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+
+    <div class="box">
+        <div class="box-body">
+            <h1>Editar Semestre - {{ semester }}</h1>
+
+            {{ form_start(edit_form) }}
+            {{ form_widget(edit_form) }}
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <input type="submit" value="Editar" class="btn btn-success"/>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{{ path('semester_index') }}" class="btn btn-secondary">Voltar</a>
+                </li>
+                {#<li class="list-inline-item">
+                    {{ form_start(delete_form) }}
+                    <input type="submit" value="Deletar" class="btn btn-danger">
+                    {{ form_end(delete_form) }}
+                </li>#}
+            </ul>
+
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
+
+{% endblock %}

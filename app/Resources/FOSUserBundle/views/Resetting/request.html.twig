@@ -1,0 +1,11 @@
+{#{% extends "@FOSUser/layout.html.twig" %}#}
+{% extends "@Resources/views/base.html.twig" %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            {% include "@FOSUser/Resetting/request_content.html.twig" %}
+        </div>
+    </div>
+
+{% endblock body %}

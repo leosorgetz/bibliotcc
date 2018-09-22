@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/vendor/admin-lte/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/btn-bootstrap-4.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/login.css') }}">
+    {% endblock %}
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-offset-3 col-lg-6">
+            {% if app.request.hasPreviousSession %}
+                {% for type, messages in app.session.flashbag.all() %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ type }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+
+    {% block fos_user_content %}
+    {% endblock fos_user_content %}
+</div>
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/admin-lte/js/bootstrap.min.js') }}"></script>
+{% endblock %}
+</body>
+</html>

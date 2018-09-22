@@ -1,0 +1,67 @@
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': 'Bancas Canceladas',
+        'subtitle': ''
+    } %}
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+
+        <div class="box-body">
+            {% if boards %}
+                <table class="table table-bordered datatable">
+                    <thead>
+                    <tr>
+                        <th class="col-md-5">Titulo</th>
+                        <th class="hidden-xs">Aluno</th>
+                        <th class="hidden-xs">Orientador</th>
+                        {#<th>Avaliador 1</th>#}
+                        {#<th>Avaliador 2</th>#}
+                        <th class="hidden-xs">Semestre</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in boards %}
+                        <tr>
+                            <td>{{ board.project.name }}</td>
+                            <td class="hidden-xs">{{ board.project.student }}</td>
+                            <td class="hidden-xs">{{ board.project.advisor }}</td>
+                            {#<td>{{ board.evaluatorOne }}</td>#}
+                            {#<td>{{ board.evaluatorTwo }}</td>#}
+                            <td class="hidden-xs">{{ board.semester }}</td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.id }) }}">
+                                            <i class="glyphicon glyphicon-eye-open"></i>
+                                        </a>
+                                    </li>
+                                    {#{% if is_granted('ROLE_ADMIN') %}
+                                        <li class="list-inline-item">
+                                            <a class="btn btn-success" href="">Recriar Banca</a>
+                                        </li>
+                                    {% endif %}#}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info" role="alert">
+                            <b>Não existe nenhuma banca cancelada.</b>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

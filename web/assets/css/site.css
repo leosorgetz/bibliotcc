@@ -1,0 +1,157 @@
+
+body {
+    min-height: 100vh;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #6b6af8, #3f3e7f) no-repeat;
+    background-size: cover;
+}
+
+.corpo {
+    padding-top: 80px;
+}
+
+h1, h2 {
+    text-align: center;
+    color: white;
+}
+
+@media (max-width: 767px) {
+    .v-center {
+        margin-top: 35%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .v-center {
+        margin-top: 35%;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .v-center {
+        margin-top: 40%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .v-center {
+        margin-top: 10%;
+    }
+}
+
+.btn-sistema {
+    border-radius: 0;
+    transition: color 500ms, background-color 500ms, border-color 500ms;
+    background-color: #6c6be0;
+    color: white;
+}
+
+.btn-sistema:hover,
+.btn-sistema:active,
+.btn-sistema:focus {
+    background-color: #4c4b9d;
+    color: white;
+    border-color: white;
+    transition: color 500ms, background-color 500ms, border-color 500ms;
+}
+
+.custom-nav {
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.custom-nav .navbar-brand {
+    color: white;
+    font-weight: bold;
+}
+
+.custom-nav .navbar-toggle {
+    border-color: white;
+    border-radius: 0;
+}
+
+@media (max-width: 767px) {
+    .custom-nav .navbar-collapse {
+        border-color: transparent;
+        /*border: none;*/
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .custom-nav .navbar-collapse li a {
+        color: black !important;
+    }
+}
+
+.custom-nav .navbar-toggle:hover {
+    background-color: rgba(223, 223, 223, 0.2);
+}
+
+.custom-nav .icon-bar {
+    background-color: white !important;
+}
+
+.custom-nav .navbar-right > li > a {
+    color: white;
+}
+
+.custom-nav .navbar-right > li > a:hover,
+.custom-nav .navbar-brand:hover {
+    color: #e6e6e6;
+}
+
+.navbar-default .navbar-nav > .open > a:focus,
+.navbar-default .navbar-nav > .open > a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.navbar-default .navbar-nav > .open > a {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .custom-nav .navbar-right > li > ul > li > a {
+        color: white !important;
+    }
+}
+
+label {
+    color: white;
+}
+
+.custom-nav .navbar-collapse {
+
+}
+
+.panel-login {
+    border-radius: 10px;
+    margin-top: 25px;
+    background-color: transparent;
+    border: none;
+    padding: 20px 20px 50px 20px;
+}
+
+.login-label {
+    color: white;
+}
+
+.login-input, input {
+    border-radius: 0 !important;
+}
+
+.sucess-button {
+    border-radius: 0;
+}
+
+.remember-password-option {
+    color: white;
+}
+
+.remember-password-option:hover {
+    color: whitesmoke;
+}
+
+.confirm-reset {
+    color: white;
+    font-size: 20px;
+}

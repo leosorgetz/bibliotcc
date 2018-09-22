@@ -1,0 +1,76 @@
+<aside class="main-sidebar">
+    <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li>
+                    <a href="{{ path('dashboard') }}">
+                        <i class="fa fa-list"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {#{% if is_granted('ROLE_PROFESSOR') %}#}
+                <li>
+                    <a href="{{ path('semester_index') }}">
+                        <i class="fa fa-calendar"></i>
+                        <span>Semestres</span>
+                    </a>
+                </li>
+            {#{% endif %}#}
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('boards_canceled') }}">
+                        <i class="fa fa-trash"></i>
+                        <span>Bancas Canceladas</span>
+                    </a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{{ path('project_index') }}">
+                    <i class="fa fa-search"></i>
+                    <span>Buscar Projetos</span>
+                </a>
+            </li>
+
+            {% if is_granted('ROLE_ADMIN') %}
+                <li {#class="active"#}>
+                    <a href="{{ path('admin') }}">
+                        <i class="fa fa-key"></i>
+                        <span>Painel Administrador</span>
+                    </a>
+                </li>
+            {% endif %}
+
+            {#<li class="active">
+                <a href="#">
+                    <i class="fa fa-link"></i>
+                    <span>Link</span>
+                </a>
+            </li>#}
+
+            {#<li>
+                <a href="#">
+                    <i class="fa fa-link"></i>
+                    <span>Another Link</span>
+                </a>
+            </li>#}
+
+            {#<li class="treeview">
+                <a href="#">
+                    <i class="fa fa-link"></i>
+                    <span>Multilevel</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="#">Link in level 2</a></li>
+                    <li><a href="#">Link in level 2</a></li>
+                </ul>
+            </li>#}
+        </ul>
+    </section>
+</aside>

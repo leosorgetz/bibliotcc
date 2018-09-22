@@ -1,0 +1,69 @@
+{% extends 'admin.html.twig' %}
+
+{% block header %}
+    {% include 'partials/admin/header.html.twig' with {
+        'title': 'Todos os Projetos',
+        'subtitle': ''
+    } %}
+{% endblock %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            {#<h1>Todos os Projetos</h1>#}
+            {% if boards %}
+                <table class="table table-bordered datatable">
+                    <thead>
+                    <tr>
+                        {#<th>Id</th>#}
+                        <th>Titulo</th>
+                        {#<th>Descrição</th>#}
+                        <th class="hidden-xs">Aluno</th>
+                        <th class="hidden-xs">Orienador</th>
+                        <th class="col-md-1 col-sm-1 col-xs-2">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for board in boards %}
+                        <tr>
+                            {#<td>{{ board.project.id }}</td>#}
+                            <td>{{ board.project.name }}</td>
+                            {#<td>{{ board.project.description }}</td>#}
+                            <td class="hidden-xs">{{ board.project.student }}</td>
+                            <td class="hidden-xs">{{ board.project.advisor }}</td>
+                            <td>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('board_show', { 'id': board.id }) }}"><i
+                                                    class="glyphicon glyphicon-eye-open"></i></a>
+                                    </li>
+                                    {#<li class="list-inline-item">
+                                        <a class="btn btn-primary"
+                                           href="{{ path('project_show', { 'id': board.project.id }) }}">Projeto</a>
+                                    </li>#}
+                                    {#{% if is_granted("IS_FULLY_AUTHENTICATED") and board.project.student.id == app.user.id %}
+                                        <li class="list-inline-item">
+                                            <a class="btn btn-warning"
+                                               href="{{ path('project_edit', { 'id': board.project.id }) }}">Editar</a>
+                                        </li>
+                                    {% endif %}#}
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-info">
+                            <strong>Não existe nenhum projeto cadastrado.</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+{% endblock %}

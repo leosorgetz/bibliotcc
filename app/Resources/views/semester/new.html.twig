@@ -1,0 +1,23 @@
+{#{% extends 'base.html.twig' %}#}
+{% extends 'admin.html.twig' %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+
+{% block body %}
+    <div class="box">
+        <div class="box-body">
+            <h1>Adicionar Semestre</h1>
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <ul class="list-inline">
+                <li class="list-inline-item">
+                    <input type="submit" value="Adicionar" class="btn btn-success"/>
+                </li>
+                <li class="list-inline-item">
+                    <a href="{{ path('semester_index') }}" class="btn btn-secondary">Voltar</a>
+                </li>
+            </ul>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

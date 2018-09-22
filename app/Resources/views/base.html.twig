@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>{% block title %}BiblioTCC{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/vendor/aos/aos.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+<body>
+{% block navbar %}
+    {% include "partials/site/navbar.html.twig" %}
+{% endblock navbar %}
+<div class="container corpo">
+    {% block body %}
+    {% endblock %}
+</div>
+
+{% block javascripts %}
+    <script src="{{ asset('assets/vendor/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('assets/vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('assets/vendor/typed-js/typed.min.js') }}"></script>
+    <script src="{{ asset('assets/js/site.js') }}"></script>
+{% endblock %}
+</body>
+</html>
